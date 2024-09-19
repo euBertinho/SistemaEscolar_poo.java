@@ -66,6 +66,16 @@ public class SistemaEscolar {
             if (aluno.getMatricula().equals(matricula)) {
                 aluno.cadastrarNota(nomeDisciplina, nota1, nota2);
                 System.out.println("Notas cadastradas com sucesso.");
+                
+                
+                if (!aluno.isAprovado(nomeDisciplina)) {
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println("Aluno não aprovado.");
+                    System.out.print("Digite a nota da recuperação: ");
+                    Double notaRecuperacao = scanner.nextDouble();
+                    aluno.cadastrarRecuperacao(nomeDisciplina, notaRecuperacao);
+                    System.out.println("Nota de recuperação cadastrada com sucesso.");
+                }
                 return;
             }
         }
@@ -73,17 +83,17 @@ public class SistemaEscolar {
     }
 
     public void emitirBoletim(String matricula) {
-    for (Aluno aluno : alunos) {
-    if (aluno.getMatricula().equals(matricula)) {
-    System.out.println("Boletim de " + aluno.getNome());
-    for (String disciplina : aluno.getNotas().keySet()) {
-    Double media = aluno.calcularMedia(disciplina);
-     System.out.println("Disciplina: " + disciplina + " | Média: " + media);
-    System.out.println("Aprovado: " + aluno.isAprovado(disciplina));
-    }
-    return;
+        for (Aluno aluno : alunos) {
+            if (aluno.getMatricula().equals(matricula)) {
+                System.out.println("Boletim de " + aluno.getNome());
+                for (String disciplina : aluno.getNotas().keySet()) {
+                    Double media = aluno.calcularMedia(disciplina);
+                    System.out.println("Disciplina: " + disciplina + " | Média: " + media);
+                    System.out.println("Aprovado: " + aluno.isAprovado(disciplina));
+                }
+                return;
+            }
         }
+        System.out.println("Aluno não encontrado.");
     }
-System.out.println("Aluno não encontrado.");
-}
 }

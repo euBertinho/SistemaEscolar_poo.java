@@ -30,6 +30,35 @@ public class Aluno {
         }
     }
 
+    public void cadastrarRecuperacao(String disciplina, Double notaRecuperacao) {
+        if (notas.containsKey(disciplina)) {
+            Double[] notasDisciplina = notas.get(disciplina);
+            Double nota1 = notasDisciplina[0];
+            Double nota2 = notasDisciplina[1];
+            Double provaFinal = notasDisciplina[2];
+
+          
+            Double menorNota = nota1;
+            if (nota2 < menorNota) {
+                menorNota = nota2;
+            }
+            if (provaFinal != null && provaFinal < menorNota) {
+                menorNota = provaFinal;
+            }
+
+            
+            if (nota1.equals(menorNota)) {
+                nota1 = notaRecuperacao;
+            } else if (nota2.equals(menorNota)) {
+                nota2 = notaRecuperacao;
+            } else if (provaFinal != null && provaFinal.equals(menorNota)) {
+                provaFinal = notaRecuperacao;
+            }
+
+            this.notas.put(disciplina, new Double[]{nota1, nota2, provaFinal});
+        }
+    }
+
     public Double calcularMedia(String disciplina) {
         if (notas.containsKey(disciplina)) {
             Double[] notasDisciplina = notas.get(disciplina);
